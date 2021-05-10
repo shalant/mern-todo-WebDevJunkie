@@ -1,19 +1,39 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react';
 
 export default function Register() {
-    const [username, setUsername] = useEffect('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const register = (e) => {
+        e.preventDefault();
+        fetch(`http://localhost:4000/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        });
+    };
 
     return (
         <div>
             <h1>Register</h1>
-            <form>
+            <form onSubmit={register}>
                 <input 
                     onChange={(e) => setUsername(e.target.value)} 
-                    placeholder='username' />
+                    placeholder='username' 
+                />
                 <br />
-                <input placeholder='password' />
+                <input
+                    type='password'
+                    onChange={(e) => setPassword(e.target.value)} 
+                    placeholder='password' 
+                />
                 <br />
-                <button>Register</button>
+                <button onClick='submit'>Register</button>
             </form>
         </div>
         
